@@ -1,6 +1,6 @@
 package com.example.ThinkingInJava.U_并发.C_终结任务.used;
 
-import com.example.U_并发.C_终结任务.Entrance;
+import com.example.ThinkingInJava.U_并发.C_终结任务.Entrance;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

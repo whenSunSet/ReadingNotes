@@ -1,10 +1,11 @@
 package com.example.IntroductionToAlgorithms.B_C_设计算法;
 
-import com.example.V_算法.Util;
 
 /**
  * Created by heshixiyang on 2017/2/10.
  */
+
+import com.example.IntroductionToAlgorithms.util.Util;
 
 /**
  * 归并排序：用了分治思想(分解总问题成为子问题--》解决子问题--》合并子问题从而解决总问题)

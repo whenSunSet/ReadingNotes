@@ -1,6 +1,6 @@
 package com.example.ThinkingInJava.S_枚举类型.J_常量相关的方法;
 
-import com.example.S_枚举类型.F_随机选取.Enums;
+import com.example.ThinkingInJava.S_枚举类型.F_随机选取.Enums;
 
 import java.util.Iterator;
 

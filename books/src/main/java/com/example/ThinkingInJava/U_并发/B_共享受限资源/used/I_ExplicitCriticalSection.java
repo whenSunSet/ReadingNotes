@@ -1,8 +1,8 @@
 package com.example.ThinkingInJava.U_并发.B_共享受限资源.used;
 
-import com.example.U_并发.B_共享受限资源.ExplicitPairManger;
-import com.example.U_并发.B_共享受限资源.ExplicitPairManger2;
-import com.example.U_并发.B_共享受限资源.PairManager;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.ExplicitPairManger;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.ExplicitPairManger2;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.PairManager;
 
 /**
  * Created by heshixiyang on 2017/2/5.

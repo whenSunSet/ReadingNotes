@@ -1,7 +1,7 @@
 package com.example.ThinkingInJava.U_并发.A_基本的线程机制.used;
 
-import com.example.U_并发.A_基本的线程机制.ExceptionThread2;
-import com.example.U_并发.A_基本的线程机制.MyUncaughtExceptionHandler;
+import com.example.ThinkingInJava.U_并发.A_基本的线程机制.ExceptionThread2;
+import com.example.ThinkingInJava.U_并发.A_基本的线程机制.MyUncaughtExceptionHandler;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

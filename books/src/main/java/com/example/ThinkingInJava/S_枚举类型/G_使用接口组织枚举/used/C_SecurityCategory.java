@@ -1,6 +1,7 @@
 package com.example.ThinkingInJava.S_枚举类型.G_使用接口组织枚举.used;
 
-import com.example.S_枚举类型.F_随机选取.Enums;
+
+import com.example.ThinkingInJava.S_枚举类型.F_随机选取.Enums;
 
 /**
  * Created by heshixiyang on 2017/2/2.

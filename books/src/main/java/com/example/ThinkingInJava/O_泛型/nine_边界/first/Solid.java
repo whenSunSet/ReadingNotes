@@ -1,8 +1,9 @@
 package com.example.ThinkingInJava.O_泛型.nine_边界.first;
 
-import com.example.O_泛型.nine_边界.Dimension;
-import com.example.O_泛型.nine_边界.HasColor;
-import com.example.O_泛型.nine_边界.Weight;
+
+import com.example.ThinkingInJava.O_泛型.nine_边界.Dimension;
+import com.example.ThinkingInJava.O_泛型.nine_边界.HasColor;
+import com.example.ThinkingInJava.O_泛型.nine_边界.Weight;
 
 import java.awt.Color;
 

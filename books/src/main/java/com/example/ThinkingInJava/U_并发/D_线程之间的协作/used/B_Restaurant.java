@@ -1,8 +1,9 @@
 package com.example.ThinkingInJava.U_并发.D_线程之间的协作.used;
 
-import com.example.U_并发.D_线程之间的协作.Chef;
-import com.example.U_并发.D_线程之间的协作.Meal;
-import com.example.U_并发.D_线程之间的协作.WaitPerson;
+
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Chef;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Meal;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.WaitPerson;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

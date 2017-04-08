@@ -1,12 +1,14 @@
 package com.example.ThinkingInJava.U_并发.D_线程之间的协作.used;
 
-import com.example.U_并发.D_线程之间的协作.Receiver;
-import com.example.U_并发.D_线程之间的协作.Sender;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Receiver;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Sender;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+
 
 /**
  * Created by heshixiyang on 2017/2/6.

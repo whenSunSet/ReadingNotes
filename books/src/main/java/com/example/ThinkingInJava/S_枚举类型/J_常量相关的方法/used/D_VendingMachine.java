@@ -1,8 +1,9 @@
 package com.example.ThinkingInJava.S_枚举类型.J_常量相关的方法.used;
 
-import com.example.O_泛型.eleven_问题.FArray;
-import com.example.S_枚举类型.J_常量相关的方法.Category;
-import com.example.S_枚举类型.J_常量相关的方法.Input;
+
+import com.example.ThinkingInJava.O_泛型.eleven_问题.FArray;
+import com.example.ThinkingInJava.S_枚举类型.J_常量相关的方法.Category;
+import com.example.ThinkingInJava.S_枚举类型.J_常量相关的方法.Input;
 
 /**
  * Created by heshixiyang on 2017/2/2.

@@ -1,6 +1,6 @@
 package com.example.ThinkingInJava.U_并发.B_共享受限资源.used;
 
-import com.example.U_并发.B_共享受限资源.EvenChecker;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.EvenChecker;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

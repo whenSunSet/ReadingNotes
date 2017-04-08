@@ -1,6 +1,6 @@
 package com.example.ThinkingInJava.S_枚举类型.K_多路分发.used;
 
-import com.example.S_枚举类型.K_多路分发.Item;
+import com.example.ThinkingInJava.S_枚举类型.K_多路分发.Item;
 
 import java.util.Random;
 

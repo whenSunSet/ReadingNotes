@@ -1,6 +1,6 @@
 package com.example.ThinkingInJava.Q_容器深入研究.C_队列;
 
-import com.example.O_泛型.eleven_问题.FArray;
+import com.example.ThinkingInJava.O_泛型.eleven_问题.FArray;
 
 import java.util.LinkedList;
 import java.util.PriorityQueue;

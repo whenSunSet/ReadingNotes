@@ -1,10 +1,10 @@
 package com.example.ThinkingInJava.U_并发.D_线程之间的协作.used;
 
-import com.example.U_并发.D_线程之间的协作.Buttered;
-import com.example.U_并发.D_线程之间的协作.Eater;
-import com.example.U_并发.D_线程之间的协作.Jammer;
-import com.example.U_并发.D_线程之间的协作.Toast;
-import com.example.U_并发.D_线程之间的协作.Toaster;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Buttered;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Eater;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Jammer;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Toast;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Toaster;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

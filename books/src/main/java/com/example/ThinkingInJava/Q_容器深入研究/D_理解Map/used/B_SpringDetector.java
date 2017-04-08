@@ -1,7 +1,7 @@
 package com.example.ThinkingInJava.Q_容器深入研究.D_理解Map.used;
 
-import com.example.Q_容器深入研究.D_理解Map.Groundhog;
-import com.example.Q_容器深入研究.D_理解Map.Prediction;
+import com.example.ThinkingInJava.Q_容器深入研究.D_理解Map.Groundhog;
+import com.example.ThinkingInJava.Q_容器深入研究.D_理解Map.Prediction;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 package com.example.ThinkingInJava.T_注解.B_编写注释处理器;
 
-import com.example.T_注解.B_编写注释处理器.used.B_SQLString;
-import com.example.T_注解.B_编写注释处理器.used.D_DBTable;
+import com.example.ThinkingInJava.T_注解.B_编写注释处理器.used.B_SQLString;
+import com.example.ThinkingInJava.T_注解.B_编写注释处理器.used.D_DBTable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

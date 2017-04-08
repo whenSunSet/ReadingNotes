@@ -1,7 +1,7 @@
 package com.example.ThinkingInJava.O_泛型.ten_通配符.second;
 
-import com.example.O_泛型.ten_通配符.first.Apple;
-import com.example.O_泛型.ten_通配符.first.Fruit;
+import com.example.ThinkingInJava.O_泛型.ten_通配符.first.Apple;
+import com.example.ThinkingInJava.O_泛型.ten_通配符.first.Fruit;
 
 import java.util.ArrayList;
 import java.util.List;

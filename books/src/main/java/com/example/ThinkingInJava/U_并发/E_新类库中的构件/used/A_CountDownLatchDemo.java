@@ -1,7 +1,8 @@
 package com.example.ThinkingInJava.U_并发.E_新类库中的构件.used;
 
-import com.example.U_并发.E_新类库中的构件.TaskPortion;
-import com.example.U_并发.E_新类库中的构件.WaitingTask;
+
+import com.example.ThinkingInJava.U_并发.E_新类库中的构件.TaskPortion;
+import com.example.ThinkingInJava.U_并发.E_新类库中的构件.WaitingTask;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;

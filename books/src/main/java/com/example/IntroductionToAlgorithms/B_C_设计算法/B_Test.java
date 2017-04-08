@@ -1,7 +1,7 @@
 package com.example.IntroductionToAlgorithms.B_C_设计算法;
 
 
-import com.example.IntroductionToAlgorithms.Util;
+import com.example.IntroductionToAlgorithms.util.Util;
 
 /**
  * Created by heshixiyang on 2017/4/6.

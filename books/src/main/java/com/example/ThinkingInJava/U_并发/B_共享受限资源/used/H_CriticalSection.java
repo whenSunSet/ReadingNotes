@@ -1,10 +1,10 @@
 package com.example.ThinkingInJava.U_并发.B_共享受限资源.used;
 
-import com.example.U_并发.B_共享受限资源.PairChecker;
-import com.example.U_并发.B_共享受限资源.PairManager2;
-import com.example.U_并发.B_共享受限资源.PairManager1;
-import com.example.U_并发.B_共享受限资源.PairManager;
-import com.example.U_并发.B_共享受限资源.PairManipulator;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.PairChecker;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.PairManager;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.PairManager1;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.PairManager2;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.PairManipulator;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

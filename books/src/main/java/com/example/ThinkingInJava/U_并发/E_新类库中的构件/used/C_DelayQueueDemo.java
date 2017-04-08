@@ -1,7 +1,8 @@
 package com.example.ThinkingInJava.U_并发.E_新类库中的构件.used;
 
-import com.example.U_并发.E_新类库中的构件.DelayedTask;
-import com.example.U_并发.E_新类库中的构件.DelayedTaskConsumer;
+
+import com.example.ThinkingInJava.U_并发.E_新类库中的构件.DelayedTask;
+import com.example.ThinkingInJava.U_并发.E_新类库中的构件.DelayedTaskConsumer;
 
 import java.util.Random;
 import java.util.concurrent.DelayQueue;

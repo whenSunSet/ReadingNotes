@@ -1,6 +1,6 @@
 package com.example.ThinkingInJava.S_枚举类型.I_EnumMap;
 
-import com.example.S_枚举类型.H_使用EnumSet代替标志.AlarmPoints;
+import com.example.ThinkingInJava.S_枚举类型.H_使用EnumSet代替标志.AlarmPoints;
 
 import java.util.EnumMap;
 import java.util.Map;

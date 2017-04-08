@@ -1,4 +1,4 @@
-package com.example.IntroductionToAlgorithms;
+package com.example.IntroductionToAlgorithms.util;
 
 import java.util.Random;
 
@@ -6,7 +6,9 @@ import java.util.Random;
  * Created by heshixiyang on 2017/2/10.
  */
 public class Util {
-    public static final int MAX=1000000;
+
+    public static final int MAX=10000000;
+    public static final int MIN=-10000000;
     public static int[] getRandomIntList(int size){
         return getRandomIntListHasBounder(size,0);
     }
@@ -41,4 +43,5 @@ public class Util {
         for (byte i:bytes) System.out.print(i+",");
         System.out.println("");
     }
+
 }

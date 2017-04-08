@@ -1,6 +1,6 @@
 package com.example.ThinkingInJava.U_并发.B_共享受限资源.used;
 
-import com.example.U_并发.B_共享受限资源.Accessor;
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.Accessor;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;

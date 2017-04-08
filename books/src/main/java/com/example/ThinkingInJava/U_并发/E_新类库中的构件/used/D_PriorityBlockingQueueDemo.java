@@ -1,7 +1,8 @@
 package com.example.ThinkingInJava.U_并发.E_新类库中的构件.used;
 
-import com.example.U_并发.E_新类库中的构件.PrioritizedTaskConsumer;
-import com.example.U_并发.E_新类库中的构件.PrioritizedTaskProducer;
+
+import com.example.ThinkingInJava.U_并发.E_新类库中的构件.PrioritizedTaskConsumer;
+import com.example.ThinkingInJava.U_并发.E_新类库中的构件.PrioritizedTaskProducer;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;

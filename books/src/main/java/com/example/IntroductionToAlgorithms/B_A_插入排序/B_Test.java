@@ -1,6 +1,6 @@
 package com.example.IntroductionToAlgorithms.B_A_插入排序;
 
-import com.example.IntroductionToAlgorithms.Util;
+import com.example.IntroductionToAlgorithms.util.Util;
 
 /**
  * Created by heshixiyang on 2017/4/6.
@@ -49,7 +49,6 @@ public class B_Test {
          *      break
          * if not b
          *      print NIL
-         *
          * 循环不变式：我们的预期是找到一个v在A中的i之后就跳出循环
          * 1.初始化：i=1的时候，如果A[1]和v相等，那么就直接找到了i。
          * 2.保持：对于A[i](1<i<=A.length)，只要在这个序列中找一个A[i]=v，那么循环就会结束

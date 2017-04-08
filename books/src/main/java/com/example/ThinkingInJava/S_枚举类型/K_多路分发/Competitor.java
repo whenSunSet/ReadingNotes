@@ -1,6 +1,7 @@
 package com.example.ThinkingInJava.S_枚举类型.K_多路分发;
 
-import com.example.S_枚举类型.K_多路分发.used.A_RoShamBo;
+
+import com.example.ThinkingInJava.S_枚举类型.K_多路分发.used.A_RoShamBo;
 
 /**
  * Created by heshixiyang on 2017/2/2.

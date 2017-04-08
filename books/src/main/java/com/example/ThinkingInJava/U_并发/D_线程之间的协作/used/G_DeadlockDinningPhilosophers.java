@@ -1,7 +1,8 @@
 package com.example.ThinkingInJava.U_并发.D_线程之间的协作.used;
 
-import com.example.U_并发.D_线程之间的协作.Chopstick;
-import com.example.U_并发.D_线程之间的协作.Philosopher;
+
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Chopstick;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Philosopher;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;

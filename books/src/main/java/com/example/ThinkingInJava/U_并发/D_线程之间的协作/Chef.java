@@ -1,8 +1,9 @@
 package com.example.ThinkingInJava.U_并发.D_线程之间的协作;
 
-import com.example.U_并发.D_线程之间的协作.used.B_Restaurant;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.used.B_Restaurant;
 
 import java.util.concurrent.TimeUnit;
+
 
 /**
  * Created by heshixiyang on 2017/2/5.

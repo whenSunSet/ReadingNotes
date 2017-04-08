@@ -1,7 +1,8 @@
 package com.example.ThinkingInJava.S_枚举类型.K_多路分发.used;
 
-import com.example.S_枚举类型.K_多路分发.Competitor;
-import com.example.S_枚举类型.K_多路分发.RoShamBo;
+
+import com.example.ThinkingInJava.S_枚举类型.K_多路分发.Competitor;
+import com.example.ThinkingInJava.S_枚举类型.K_多路分发.RoShamBo;
 
 import java.util.EnumMap;
 

@@ -1,6 +1,7 @@
 package com.example.ThinkingInJava.S_枚举类型.J_常量相关的方法.used;
 
-import com.example.S_枚举类型.J_常量相关的方法.Mail;
+
+import com.example.ThinkingInJava.S_枚举类型.J_常量相关的方法.Mail;
 
 /**
  * Created by heshixiyang on 2017/2/2.

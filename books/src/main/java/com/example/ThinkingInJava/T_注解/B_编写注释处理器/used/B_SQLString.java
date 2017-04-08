@@ -1,6 +1,7 @@
 package com.example.ThinkingInJava.T_注解.B_编写注释处理器.used;
 
-import com.example.T_注解.B_编写注释处理器.Constraints;
+
+import com.example.ThinkingInJava.T_注解.B_编写注释处理器.Constraints;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

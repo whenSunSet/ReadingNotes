@@ -1,7 +1,8 @@
 package com.example.ThinkingInJava.T_注解.B_编写注释处理器.used;
 
-import com.example.T_注解.A_基本语法.C_PasswordUtils;
-import com.example.T_注解.A_基本语法.B_UseCase;
+
+import com.example.ThinkingInJava.T_注解.A_基本语法.B_UseCase;
+import com.example.ThinkingInJava.T_注解.A_基本语法.C_PasswordUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.example.ThinkingInJava.U_并发.A_基本的线程机制.used;
 
-import com.example.U_并发.A_基本的线程机制.TaskWithResult;
+import com.example.ThinkingInJava.U_并发.A_基本的线程机制.TaskWithResult;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;

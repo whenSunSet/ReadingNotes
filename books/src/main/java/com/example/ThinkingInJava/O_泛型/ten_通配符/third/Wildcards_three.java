@@ -1,12 +1,13 @@
 package com.example.ThinkingInJava.O_泛型.ten_通配符.third;
 
-import com.example.O_泛型.ten_通配符.first.Holder_five;
+
+import com.example.ThinkingInJava.O_泛型.ten_通配符.first.Holder_five;
 
 /**
  * Created by heshixiyang on 2017/1/17.
  */
 public class Wildcards_three {
-    static void rawArgs(Holder_five holder_five,Object arg){
+    static void rawArgs(Holder_five holder_five, Object arg){
         holder_five.setValue(arg);
         holder_five.setValue(new Wildcards_three());
 

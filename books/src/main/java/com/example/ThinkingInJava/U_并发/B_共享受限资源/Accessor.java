@@ -1,6 +1,7 @@
 package com.example.ThinkingInJava.U_并发.B_共享受限资源;
 
-import com.example.U_并发.B_共享受限资源.used.K_ThreadLocalVariableHolder;
+
+import com.example.ThinkingInJava.U_并发.B_共享受限资源.used.K_ThreadLocalVariableHolder;
 
 /**
  * Created by heshixiyang on 2017/2/5.

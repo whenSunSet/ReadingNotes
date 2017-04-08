@@ -1,8 +1,8 @@
 package com.example.ThinkingInJava.U_并发.D_线程之间的协作.used;
 
-import com.example.U_并发.D_线程之间的协作.Car1;
-import com.example.U_并发.D_线程之间的协作.WaxOff1;
-import com.example.U_并发.D_线程之间的协作.WaxOn1;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.Car1;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.WaxOff1;
+import com.example.ThinkingInJava.U_并发.D_线程之间的协作.WaxOn1;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
