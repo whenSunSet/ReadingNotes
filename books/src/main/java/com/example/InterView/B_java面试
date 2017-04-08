@@ -1,0 +1,55 @@
+1.一个java文件只能有一个与文件名相同的类，可以包含其他类
+2.形式参数可被视为local variable，也就是说形式参数相当于在方法中定义了一个局部变量a，
+当传入c时，只是将c指向的对象给a。
+3.数字是指0~9，字母指大小写英文字母、下划线（_)和美元符号（$），也可以是Unicode字符集中的字符，如汉字
+4.finally 语句块是在 try 或者 catch 中的 return 语句之前执行的
+5.一个jvm中默认的classloader有Bootstrap ClassLoader、Extension ClassLoader、App ClassLoader，分别各司其职：
+  Bootstrap ClassLoader     负责加载java基础类，主要是 %JRE_HOME/lib/ 目录下的rt.jar、resources.jar、charsets.jar和class等
+  Extension ClassLoader      负责加载java扩展类，主要是 %JRE_HOME/lib/ext 目录下的jar和class
+  App ClassLoader           负责加载当前java应用的classpath中的所有类。
+  classloader 加载类用的是全盘负责委托机制。 所谓全盘负责，即是当一个classloader加载一个Class的时候，这个Class所依赖的和引用的所有 Class也由这个classloader负责载入，除非是显式的使用另外一个classloader载入。
+  所以，当我们自定义的classloader加载成功了 com.company.MyClass以后，MyClass里所有依赖的class都由这个classLoader来加载完成。
+6.静态域可以让对象访问。
+7.两个Integer或int比较
+    1.两个都是非new出来的Integer，如果数在-128到127之间，则是true,否则为false
+    java在编译Integer i2 = 128的时候,被翻译成-> Integer i2 = Integer.valueOf(128);而valueOf()函数会对-128到127之间的数进行缓存
+    2.两个都是new出来的,都为false
+    3.int和integer(无论new否)比，都为true，因为会把Integer自动拆箱为int再去比
+8.Java中的byte，short，char进行计算时都会提升为int类型。
+9.HashMap通过链表法解决哈希冲突
+10.Collection
+       -----List
+                  -----LinkedList    非同步
+                   ----ArrayList      非同步，实现了可变大小的元素数组
+                   ----Vector          同步
+                            ------Stack
+       -----Set   不允许有相同的元素
+
+
+   Map
+       -----HashTable        同步，实现一个key--value映射的哈希表
+       -----HashMap          非同步，
+       -----WeakHashMap   改进的HashMap，实现了“弱引用”，如果一个key不被引用，则被GC回收
+11.switch语句后的控制表达式只能是short、char、int、long整数类型和枚举类型，不能是float，double和boolean类型。String类型是java7开始支持
+12.重写：
+方法名相同，参数类型相同
+子类返回类型小于等于父类方法返回类型，
+子类抛出异常小于等于父类方法抛出异常，
+子类访问权限大于等于父类方法访问权限。
+13.子类构造方法在调用时必须先调用父类的，由于父类没有无参构造，必须在子类中显式调用
+14.!=和==，当用于基本类型时候，是比较值是否相同；当用于引用类型的时候，是比较对象是否相同，比较内存地址
+15.包装类初始化的是null
+16.null可以被强制类型转换成任意类型的对象，于是通过它来执行静态方法。
+17.Java一律采用Unicode编码方式，每个字符无论中文还是英文字符都占用2个字节
+18.java8中接口可以有default方法
+19.接口和抽象类不能是final的，它们需要被实现和继承
+20.在类方法中不可用this来调用本类的类方法，因为static中无this指针。
+21.声明为static和transient类型的成员数据不能被序列化。因为static代表类的状态， transient代表对象的临时数据。
+22.在运行时判断任意一个对象所属的类；在运行时构造任意一个类的对象
+在运行时判断任意一个类所具有的成员变量和方法；
+在运行时调用任意一个对象的方法；
+生成动态代理。
+23.产生一个中断，关闭io，可以终止一个线程，
+24.静态属性和静态方法是否可以被继承？
+非静态属性、静态属性、静态方法  都可以被子类继承，但是不会被覆盖，转为哪个类，调用的就是那个类的东西。也就是说这几个东西不具有多态。
+

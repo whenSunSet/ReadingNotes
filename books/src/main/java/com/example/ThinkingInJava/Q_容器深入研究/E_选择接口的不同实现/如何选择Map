@@ -1,0 +1,5 @@
+1.除了IdentifyHashMap，所有的Map插入操作都会随着尺寸变大而变慢
+2.查找的代价比插入的要小得多
+3.TreeMap通常比HashMap要慢，和Set一个原因
+4.LinkedHashMap和Set一个原因
+5.IdentifyHashMap有不一样的性能，因为它使用==而不是equals来比较数据

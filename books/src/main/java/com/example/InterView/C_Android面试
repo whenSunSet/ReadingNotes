@@ -1,0 +1,187 @@
+ 1.安卓事件分发机制，请详细说下整个流程
+
+ 2.安卓view绘制机制和加载过程，请详细说下整个流程
+    1.ViewRootImpl会调用performTraversals(),其内部会调用performMeasure()、performLayout、performDraw()。
+    2.performMeasure()会调用最外层的ViewGroup的measure()-->onMeasure(),ViewGroup的onMeasure()是抽象方法，但其提供了measureChildren()，这之中会遍历子View然后循环调用measureChild()
+    这之中会用getChildMeasureSpec()+父View的MeasureSpec+子View的LayoutParam一起获取本View的MeasureSpec，然后调用子View的measure()。
+    View的onMeasure()-->setMeasureDimension(getDefaultSize(),getDefaultSize()),getDefaultSize()默认返回measureSpec的测量数值，所以继承View进行自定义的wrap_content需要重写。
+    3.performLayout()会调用最外层的ViewGroup的layout(l,t,r,b),本View在其中使用setFrame()设置本View的四个顶点位置。
+    在onLayout(抽象方法)中确定子View的位置，如LinearLayout会遍历子View，循环调用setChildFrame()-->子View.layout()。
+    4.performDraw()会调用最外层ViewGroup的draw():其中会先后调用background.draw()(绘制背景)、onDraw()(绘制自己)、dispatchDraw()(绘制子View)、onDrawScrollBars()(绘制装饰)。
+    5.MeasureSpec由2位SpecMode(UNSPECIFIED、EXACTLY(对应精确值和match_parent)、AT_MOST(对应warp_content))和30位SpecSize组成一个int,
+    DecorView的MeasureSpec由窗口大小和其LayoutParams决定，其他View由父View的MeasureSpec和本View的LayoutParams决定。ViewGroup中有getChildMeasureSpec()来获取子View的MeasureSpec。
+    6.三种方式获取measure()后的宽高：1.Activity#onWindowFocusChange()中调用获取 2.view.post(Runnable)将获取的代码投递到消息队列的尾部。3.ViewTreeObservable.
+
+ 3.activty的加载过程 请详细介绍下:
+
+  Activity中最终到startActivityForResult()（mMainThread.getApplicationThread()传入了一个ApplicationThread检查APT）
+  ->Instrumentation#execStartActivity()和checkStartActivityResult()(这是在启动了Activity之后判断Activity是否启动成功，例如没有在AM中注册那么就会报错)
+  ->ActivityManagerNative.getDefault().startActivity()（类似AIDL，实现了IAM，实际是由远端的AMS实现startActivity()）
+  ->ActivityStackSupervisor#startActivityMayWait()
+  ->ActivityStack#resumeTopActivityInnerLocked
+  ->ActivityStackSupervisor#realStartActivityLocked()（在这里调用APT的scheduleLaunchActivity,也是AIDL，不过是在远端调起了本进程Application线程）
+  ->ApplicationThread#scheduleLaunchActivity()（这是本进程的一个线程，用于作为Service端来接受AMS client端的调起）
+  ->ActivityThread#handleLaunchActivity()（接收内部类H的消息，ApplicationThread线程发送LAUNCH_ACTIVITY消息给H）
+  ->最终在ActivityThread#performLaunchActivity()中实现Activity的启动完成了以下几件事：
+  1.从传入的ActivityClientRecord中获取待启动的Activity的组件信息
+  2.创建类加载器，使用Instrumentation#newActivity()加载Activity对象
+  3.调用LoadedApk.makeApplication方法尝试创建Application，由于单例所以不会重复创建。
+  4.创建Context的实现类ContextImpl对象，并通过Activity#attach()完成数据初始化和Context建立联系，因为Activity是Context的桥接类，
+  最后就是创建和关联window，让Window接收的事件传给Activity，在Window的创建过程中会调用ViewRootImpl的performTraversals()初始化View。
+  5.Instrumentation#callActivityOnCreate()->Activity#performCreate()->Activity#onCreate().onCreate()中会通过Activity#setContentView()调用PhoneWindow的setContentView()
+  更新界面。
+
+
+ 4.Activity的启动模式：
+    1.standard:默认标准模式，每启动一个都会创建一个实例，
+    2.singleTop：栈顶复用，如果在栈顶就调用onNewIntent复用，从onResume()开始
+    3.singleTask：栈内复用，本栈内只要用该类型Activity就会调到栈顶复用，从onResume()开始
+    4.singleInstance：单例模式，除了3中特性，系统会单独给该Activity创建一个栈，
+
+ 5.Activity缓存方法：
+    1.配置改变导致Activity被杀死，横屏变竖屏：在onStop之前会调用onSaveInstanceState()保存数据
+    在重建Activity之后，会在onStart()之后调用onRestoreInstanceState(),并把保存下来的Bundle传给onCreate()和它
+    它会默认重建Activity当前的视图，我们可以在onCreate()中，回复自己的数据。
+    2.内存不足杀掉Activity，优先级分别是：前台可见，可见非前台，后台。
+
+ 6.Service的生命周期，两种启动方法，有什么区别：
+    1.context.startService() ->onCreate()- >onStart()->Service running-->(如果调用context.stopService() )->onDestroy() ->Service shut down
+        如果Service还没有运行，则调用onCreate()然后调用onStart()；
+        如果Service已经运行，则只调用onStart()，所以一个Service的onStart方法可能会重复调用多次。
+        调用stopService的时候直接onDestroy，
+        如果是调用者自己直接退出而没有调用stopService的话，Service会一直在后台运行。
+        该Service的调用者再启动起来后可以通过stopService关闭Service。
+    2.context.bindService()->onCreate()->onBind()->Service running-->onUnbind() -> onDestroy() ->Service stop
+        onBind将返回给客户端一个IBind接口实例，IBind允许客户端回调服务的方法，比如得到Service运行的状态或其他操作。
+        这个时候会把调用者和Service绑定在一起，Context退出了,Service就会调用onUnbind->onDestroy相应退出。
+        所以调用bindService的生命周期为：onCreate --> onBind(只一次，不可多次绑定) --> onUnbind --> onDestory。
+
+ 7.怎么保证service不被杀死
+    1.提升service优先级
+    2.提升service进程优先级
+    3.onDestroy方法里重启service
+
+ 8.广播的两种注册方法，有什么区别。
+    1.静态注册:如果有广播信息来，你写的广播接收器同样的能接受到,比如系统的一些广播。
+    2.动态注册:当应用程序结束了，广播自然就没有了，一些自己定义的广播
+
+ 9.Intent可以传递哪些数据类型
+    1.Serializable
+    2.charsequence: 主要用来传递String，char等
+    3.parcelable
+    4.Bundle
+
+ 10.Json有什么优劣势
+    1.JSON的速度要远远快于XML
+    2.JSON相对于XML来讲，数据的体积小
+    3.JSON对数据的描述性比XML较差
+
+ 11.动画有哪几类，各有什么特点：动画的基本原理：其实就是利用插值器和估值器，来计算出各个时刻View的属性，然后通过改变View的属性来，实现View的动画效果。
+    1.View动画:只是影像变化，view的实际位置还在原来的地方。
+    2.帧动画是在xml中定义好一系列图片之后，使用AnimationDrawable来播放的动画。
+    3.View的属性动画：
+        1.插值器：作用是根据时间的流逝的百分比来计算属性改变的百分比
+        2.估值器：在1的基础上由这个东西来计算出属性到底变化了多少数值的类
+
+ 12.Handler、Loop消息队列模型，各部分的作用。
+    1.MessageQueue：读取会自动删除消息，单链表维护，在插入和删除上有优势。
+    在其next()中会无限循环，不断判断是否有消息，有就返回这条消息并移除。
+    2.Looper：Looper创建的时候会创建一个MessageQueue，调用loop()方法的时候消息循环开始，
+    loop()也是一个死循环，会不断调用messageQueue的next()，当有消息就处理，否则阻塞在messageQueue的next()中。
+    当Looper的quit()被调用的时候会调用messageQueue的quit(),此时next()会返回null，然后loop()方法也跟着退出。
+    3.Handler：在主线程构造一个Handler，然后在其他线程调用sendMessage(),此时主线程的MessageQueue中会插入一条message，然后被Looper使用。
+    4.系统的主线程在ActivityThread的main()为入口开启主线程，其中定义了内部类Activity.H定义了一系列消息类型，包含四大组件的启动停止。
+
+ 13. 怎样退出终止App:自己设置一个Activity的栈，然后一个个finish()。
+
+ 14. Android IPC:Binder原理
+    1.在Activity和Service进行通讯的时候，用到了Binder。
+        1.当属于同个进程我们可以继承Binder然后在Activity中对Service进行操作
+        2.当不属于同个进程，那么要用到AIDL让系统给我们创建一个Binder，然后在Activity中对远端的Service进行操作。
+    2.系统给我们生成的Binder：
+        1.Stub类中有:接口方法的id，有该Binder的标识，有asInterface(IBinder)(让我们在Activity中获取实现了Binder的接口，接口的实现在Service里，同进程时候返回Stub否则返回Proxy)
+        ，有onTransact()这个方法是在不同进程的时候让Proxy在Activity进行远端调用实现Activity操作Service
+        2.Proxy类是代理，在Activity端，其中有:IBinder mRemote(这就是远端的Binder)，两个接口的实现方法不过是代理最终还是要在远端的onTransact()中进行实际操作。
+    3.哪一端的Binder是副本，该端就可以被另一端进行操作，因为Binder本体在定义的时候可以操作本端的东西。所以可以在Activity端传入本端的Binder，
+    让Service端对其进行操作称为Listener，可以用RemoteCallbackList这个容器来装Listener，防止Listener因为经历过序列化而产生的问题。
+    4.当Activity端向远端进行调用的时候，当前线程会挂起，当方法处理完毕才会唤醒。
+    5.如果一个AIDL就用一个Service太奢侈，所以可以使用Binder池的方式，建立一个AIDL其中的方法是返回IBinder，然后根据方法中传入的参数返回具体的AIDL。
+    6.IPC的方式有：Bundle（在Intent启动的时候传入，不过是一次性的），文件共享(对于SharedPreference是特例，因为其在内存中会有缓存)，
+    使用Messenger(其底层用的也是AIDL，同理要操作哪端，就在哪端定义Messenger)，AIDL，
+    ContentProvider(在本进程中继承实现一个ContentProvider，在增删改查方法中调用本进程的SQLite，在其他进程中查询)，Socket
+
+ 15.android的优化
+
+ 16.一个singleton如何实现线程的同步问题
+    1.单例类确保自己只有一个实例(构造函数私有:不被外部实例化,也不被继承)。
+    2.单例类必须自己创建自己的实例。
+    3.单例类必须为其他对象提供唯一的实例。
+
+ 17.android重要术语解释
+    1.ActivityManagerServices，简称AMS，服务端对象，负责系统中所有Activity的生命周期
+    2.ActivityThread，App的真正入口。当开启App之后，会调用main()开始运行，开启消息循环队列，这就是传说中的UI线程或者叫主线程。
+    与ActivityManagerServices配合，一起完成Activity的管理工作
+    3.ApplicationThread，用来实现ActivityManagerService与ActivityThread之间的交互。在ActivityManagerService需要管理相关Application中的Activity的生命周期时，
+    通过ApplicationThread的代理对象与ActivityThread通讯。
+    4.ApplicationThreadProxy，是ApplicationThread在服务器端的代理，负责和客户端的ApplicationThread通讯。AMS就是通过该代理与ActivityThread进行通信的。
+    5.Instrumentation，每一个应用程序只有一个Instrumentation对象，每个Activity内都有一个对该对象的引用。
+    Instrumentation可以理解为应用进程的管家，ActivityThread要创建或暂停某个Activity时，都需要通过Instrumentation来进行具体的操作。
+    6.ActivityStack，Activity在AMS的栈管理，用来记录已经启动的Activity的先后关系，状态信息等。通过ActivityStack决定是否需要启动新的进程。
+    7.ActivityRecord，ActivityStack的管理对象，每个Activity在AMS对应一个ActivityRecord，来记录Activity的状态以及其他的管理信息。其实就是服务器端的Activity对象的映像。
+    8.TaskRecord，AMS抽象出来的一个“任务”的概念，是记录ActivityRecord的栈，一个“Task”包含若干个ActivityRecord。
+    AMS用TaskRecord确保Activity启动和退出的顺序。如果你清楚Activity的4种launchMode，那么对这个概念应该不陌生。
+
+ 18.理解Window和WindowManager
+    1.Window用于显示View和接收各种事件，Window有三种类型：应用Window(每个Activity对应一个Window)、子Window(不能单独存在，附属于特定Window)、系统window(Toast和状态栏)
+    2.Window分层级，应用Window在1-99、子Window在1000-1999、系统Window在2000-2999.WindowManager提供了增删改View三个功能。
+    3.Window是个抽象概念：每一个Window对应着一个View和ViewRootImpl，Window通过ViewRootImpl来和View建立联系，View是Window存在的实体，只能通过WindowManager来访问Window。
+    4.WindowManager的实现是WindowManagerImpl其再委托给WindowManagerGlobal来对Window进行操作，其中有四个List分别储存对应的View、ViewRootImpl、WindowManger.LayoutParams和正在被删除的View
+    5.Window的实体是存在于远端的WindowMangerService中，所以增删改Window在本端是修改上面的几个List然后通过ViewRootImpl重绘View，通过WindowSession(每个应用一个)在远端修改Window。
+    6.Activity创建Window：Activity会在attach()中创建Window并设置其回调(onAttachedToWindow()、dispatchTouchEvent()),Activity的Window是由Policy类创建PhoneWindow实现的。
+    然后通过Activity#setContentView()调用PhoneWindow的setContentView。
+
+ 19.Bitmap的处理：
+    1.当使用ImageView的时候，可能图片的像素大于ImageView，此时就可以通过BitmapFactory.Option来对图片进行压缩，inSampleSize表示缩小2^(inSampleSize-1)倍。
+    2.BitMap的缓存：
+        1.使用LruCache进行内存缓存。
+        2.使用DiskLruCache进行硬盘缓存。
+        3.实现一个ImageLoader的流程：同步异步加载、图片压缩、内存硬盘缓存、网络拉取
+            1.同步加载只创建一个线程然后按照顺序进行图片加载
+            2.异步加载使用线程池，让存在的加载任务都处于不同线程
+            3.为了不开启过多的异步任务，只在列表静止的时候开启图片加载
+
+ 20.综合技术：
+    1.CrashHandler：获取app crash的信息保存在本地然后在下一次打开app的时候发送到服务器。
+    2.multidex解决方法数过大的问题
+
+ 21.如何实现一个网络框架(参考Volley)
+    1.缓存队列,以url为key缓存内容可以参考Bitmap的处理方式，这里单独开启一个线程。
+    2.网络请求队列，使用线程池进行请求。
+    3.提供各种不同类型的返回值的解析如String，Json，图片等等。
+
+ 22.ClassLoader的基础知识：
+    1.双亲委托：一个ClassLoader类负责加载这个类所涉及的所有类，在加载的时候会判断该类是否已经被加载过，然后会递归去他父ClassLoader中找。
+    2.可以动态加载Jar通过URLClassLoader
+    3.ClassLoader 隔离问题 JVM识别一个类是由：ClassLoader id+PackageName+ClassName。
+    4.加载不同Jar包中的公共类：
+        1.让父ClassLoader加载公共的Jar，子ClassLoader加载包含公共Jar的Jar，此时子ClassLoader在加载公共Jar的时候会先去父ClassLoader中找。(只适用Java)
+        2.重写加载包含公共Jar的Jar的ClassLoader，在loadClass中找到已经加载过公共Jar的ClassLoader，也就是把父ClassLoader替换掉。(只适用Java)
+        3.在生成包含公共Jar的Jar时候把公共Jar去掉，然后
+
+ 23.插件化框架描述：dynamicLoadApk为例子
+    1.可以通过DexClassLoader来对apk中的dex包进行加载访问
+    2.如何加载资源是个很大的问题，因为宿主程序中并没有apk中的资源，所以调用R资源会报错，所以这里使用了Activity中的实现ContextImpl的getAssets()和getResources()再加上反射来实现。
+    3.由于系统启动Activity有很多初始化动作要做，而我们手动反射很难完成，所以可以采用接口机制，将Activity的大部分生命周期提取成接口，然后通过代理Activity去调用插件Activity的生命周期。
+    同时如果像增加一个新生命周期方法的时候，只需要在接口中和代理中声明一下就行。
+    4.缺点：
+        1.慎用this，因为在apk中使用this并不代表宿主中的activity，当然如果this只是表示自己的接口还是可以的。除此之外可以使用that代替this。
+        2.不支持Service和静态注册的Broadcast
+        3.不支持LaunchMode和Apk中Activity的隐式调用。
+
+ 24.热修复：Andfix为例子
+    1.大致原理：apkpatch将两个apk做一次对比，然后找出不同的部分。可以看到生成的apatch了文件，后缀改成zip再解压开，里面有一个dex文件。
+    通过jadx查看一下源码，里面就是被修复的代码所在的类文件,这些更改过的类都加上了一个_CF的后缀，
+    并且变动的方法都被加上了一个叫@MethodReplace的annotation，通过clazz和method指定了需要替换的方法。
+    然后客户端sdk得到补丁文件后就会根据annotation来寻找需要替换的方法。最后由JNI层完成方法的替换。
+    2.无法添加新类和新的字段、补丁文件很容易被反编译、加固平台可能会使热补丁功能失效
+
