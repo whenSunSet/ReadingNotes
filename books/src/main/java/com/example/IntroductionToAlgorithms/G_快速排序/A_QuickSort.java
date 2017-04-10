@@ -5,6 +5,7 @@ import com.example.IntroductionToAlgorithms.util.Util;
 /**
  * Created by heshixiyang on 2017/4/9.
  */
+//快速排序 时间为lgn*n
 public class A_QuickSort {
 
     public static void main(String[] args) {

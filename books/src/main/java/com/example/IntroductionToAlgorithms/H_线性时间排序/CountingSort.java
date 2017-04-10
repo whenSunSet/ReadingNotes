@@ -1,10 +1,11 @@
-package com.example.IntroductionToAlgorithms.H_线性事件排序;
+package com.example.IntroductionToAlgorithms.H_线性时间排序;
 
 import com.example.IntroductionToAlgorithms.util.Util;
 
 /**
  * Created by heshixiyang on 2017/4/9.
  */
+//计数排序 时间为n
 public class CountingSort {
     public static void main(String[] args) {
         int[] A= Util.getRandomIntListHasBounder(10,100);

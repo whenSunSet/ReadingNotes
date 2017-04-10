@@ -5,6 +5,7 @@ import com.example.IntroductionToAlgorithms.util.Util;
 /**
  * Created by heshixiyang on 2017/4/9.
  */
+//时间为n
 public class Select {
     public static void main(String[] args) {
         int[] A= Util.getRandomIntListHasBounder(10,100);

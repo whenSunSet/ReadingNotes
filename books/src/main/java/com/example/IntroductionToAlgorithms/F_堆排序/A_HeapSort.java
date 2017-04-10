@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2017/4/8 0008.
  */
+//堆排序 时间为lgn*n
 public class A_HeapSort {
     public static class Node{
         public int data;
