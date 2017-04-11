@@ -47,6 +47,7 @@ public class A_BinarySearchTree {
          * insertNode(root,leaf)
          * if root is null
          *      root=leaf
+         *      return
          * nowNode=root
          * while nowNode is not null
          *      parentNode=nowNode
@@ -54,10 +55,6 @@ public class A_BinarySearchTree {
          *          nowNode=nowNode.leftChild
          *      else
          *          nowNode=nowNode.rightChild
-         *
-         * if parentNode is null
-         *      parentNode=root
-         *
          * if parentNode.data>=leaf.data
          *      parentNode.leftChild=leaf
          *      parentNode.leftChild.parent=parentNode
@@ -77,7 +74,6 @@ public class A_BinarySearchTree {
             else
                 nowNode=nowNode.rightChild;
         }
-        if (parentNode==null)parentNode=root;
         if (parentNode.data.compareTo(leaf.data)==0||parentNode.data.compareTo(leaf.data)==1){
             parentNode.leftChild=leaf;
             parentNode.leftChild.parent=parentNode;
@@ -138,12 +134,19 @@ public class A_BinarySearchTree {
     }
 
     private static <T extends Comparable> TreeNode replaceNode(TreeNode<T> parentNode,TreeNode<T> nodeReplace,TreeNode<T> nodeBeReplace){
-        if (parentNode==null)return nodeReplace;
-        if (parentNode.leftChild==nodeBeReplace)
-            parentNode.leftChild=nodeReplace;
-        else if(parentNode.rightChild==nodeBeReplace&&parentNode.leftChild!=parentNode.rightChild)
-            parentNode.rightChild=nodeReplace;
-        if (nodeReplace!=null)nodeReplace.parent=parentNode;
+        if (parentNode!=null){
+            if (nodeReplace!=null){
+                if (nodeReplace.parent!=null&&nodeReplace.parent.leftChild==nodeReplace)nodeReplace.parent.leftChild=null;
+                if (nodeReplace.parent!=null&&nodeReplace.parent.rightChild==nodeReplace)nodeReplace.parent.rightChild=null;
+            }
+            if (parentNode.leftChild==nodeBeReplace){
+                parentNode.leftChild=nodeReplace;
+            } else if (parentNode.rightChild==nodeBeReplace&&parentNode.rightChild!=parentNode.leftChild){
+                parentNode.rightChild=nodeReplace;
+            }
+            if (nodeReplace!=null)nodeReplace.parent=parentNode;
+            if (nodeBeReplace!=null)nodeBeReplace.parent=null;
+        }
         return nodeReplace;
     }
 
