@@ -8,6 +8,11 @@ import com.example.IntroductionToAlgorithms.util.Util;
 public class B_RedBlackTree {
     public static class RedBlackTreeNode<T extends Comparable>{
         public static final RedBlackTreeNode NIL=new RedBlackTreeNode<>();
+        static {
+            NIL.parent=NIL;
+            NIL.leftChild=NIL;
+            NIL.rightChild=NIL;
+        }
         T data;
         RedBlackTreeNode<T> parent=NIL;
         RedBlackTreeNode<T> leftChild=NIL;
@@ -20,6 +25,37 @@ public class B_RedBlackTree {
         }
 
         private RedBlackTreeNode() {}
+
+        public RedBlackTreeNode<T> getChild(boolean isLeft){
+            if (this==NIL)return NIL;
+            if (isLeft)return leftChild;
+            else return rightChild;
+        }
+
+        public RedBlackTreeNode<T> getBrother(){
+            if (parent==NIL)return NIL;
+            if (this==NIL&&parent.leftChild!=NIL){
+                return parent.rightChild;
+            }else if (this==NIL&&parent.rightChild!=NIL)
+                return parent.leftChild;
+
+            if (isLeft)return parent.rightChild;
+            else return parent.leftChild;
+        }
+
+        public RedBlackTreeNode<T> getGrandParent(){
+            if (parent==NIL)return NIL;
+            else return parent.parent;
+        }
+        public void setChild(RedBlackTreeNode<T> child){
+            if (this==NIL)return;
+            if (child.isLeft)this.leftChild=child;
+            else this.rightChild=child;
+        }
+        public void setParent(RedBlackTreeNode<T> parent){
+            if (this==NIL)return;
+            this.parent=parent;
+        }
     }
 
     public static void main(String[] args) {
@@ -46,21 +82,11 @@ public class B_RedBlackTree {
          *          nowNode=nowNode.rightChild
          *          insertNode.isLeft=false
          *
-         * if insertNode.isLeft
-         *      parentNode.leftChild=insertNode
-         * else
-         *      parentNode.rightChild=insertNode
-         * insertNode.parent=parentNode;
-         *
+         * parentNode.setChild(insertNode)
+         * insertNode.setParent(parentNode)
          * grandParentNode=parentNode.parent
-         * if grandParentNode==NIL
-         *      uncleNode=NIL
-         * else
-         *      if parentNode.isLeft
-         *          uncleNode=grandParentNode.rightChild
-         *      else
-         *          uncleNode=grandParentNode.leftChild
-         * translate(grandParentNode,parentNode,uncleNode,insertNode)
+         * uncleNode=parentNode.getBrother()
+         * insertTranslate(grandParentNode,parentNode,uncleNode,insertNode)
          */
         if (root.data==null){
             root.data=insertNode.data;
@@ -78,67 +104,48 @@ public class B_RedBlackTree {
             }
         }
 
-        if (insertNode.isLeft)parentNode.leftChild=insertNode;
-        else parentNode.rightChild=insertNode;
-        insertNode.parent=parentNode;
-
+        parentNode.setChild(insertNode);
+        insertNode.setParent(parentNode);
         grandParentNode=parentNode.parent;
-        if (grandParentNode==RedBlackTreeNode.NIL)uncleNode=RedBlackTreeNode.NIL;
-        else {
-            if (parentNode.isLeft)uncleNode=grandParentNode.rightChild;
-            else uncleNode=grandParentNode.leftChild;
-        }
-        RedBlackTreeNode<T> tempRoot=translate(grandParentNode,parentNode,uncleNode,insertNode);
+        uncleNode=parentNode.getBrother();
+        RedBlackTreeNode<T> tempRoot= insertTranslate(grandParentNode,parentNode,uncleNode,insertNode);
         return tempRoot==null?root:tempRoot;
     }
 
-    private static <T extends Comparable> RedBlackTreeNode<T> translate(RedBlackTreeNode<T> grandParentNode,RedBlackTreeNode<T> parentNode,RedBlackTreeNode<T> uncleNode,RedBlackTreeNode<T> insertNode){
+    public static <T extends Comparable> RedBlackTreeNode delete(RedBlackTreeNode<T> root,T data){
+        return null;
+    }
+
+    private static <T extends Comparable> RedBlackTreeNode<T> insertTranslate(RedBlackTreeNode<T> grandParentNode, RedBlackTreeNode<T> parentNode, RedBlackTreeNode<T> uncleNode, RedBlackTreeNode<T> insertNode){
         /**
          * if parentNode==NIL
          *      return
          * if parentNode.isBlack
-         *      insertNode.parent=parentNode
-         *      if insertNode.isLeft
-         *          parentNode.leftChild=insertNode
-         *      else
-         *          parentNode.rightChild=insertNode
          *      return
          * if grandParentNode==NIL
          *      parentNode.lsBlack=true
          *      return
          * if grandParentNode.isBlack and !parentNode.isBlack and (uncleNode==NIL or uncleNode.isBlack)
          *      if parentNode.isLeft!=insertNode.isLeft
-         *          if parentNode.isLeft
-         *              leftRotate(parentNode,insertNode)
-         *          else
-         *              rightRotate(parentNode,insertNode)
+         *          rotate(parentNode,insertNode,parentNode.isLeft)
          *      grandParentNode.isBlack=false
          *      parenNode.isBlack=true
-         *      if parentNode.isLeft
-         *          rightRotate(grandParentNode,parenNode)
-         *      else
-         *          leftRotate(grandParentNode,parenNode)
+         *      rotate(grandParentNode,parenNode,!parentNode.isLeft)
          *      return
          * if !parentNode.isBlack and grandParentNode.isBlack and !uncleNode.isBlack
          *     parentNode.isBlack=true
          *     uncleNode.isBlack=true
          *     grandParentNode.isBlack=false
-         *     if grandParentNode.parent.isLeft
-         *          tempUncleNode=grandParentNode.parent.parent.rightChild
-         *     else
-         *          tempUncleNode=grandParentNode.parent.parent.leftChild
-         *     translate(grandParentNode.parent.parent,grandParentNode.parent,tempUncleNode,grandParentNode)
+         *     tempUncleNode=grandParentNode.parent.getBrother()
+         *     insertTranslate(grandParentNode.parent.parent,grandParentNode.parent,tempUncleNode,grandParentNode)
          * return
          */
 
         //情况一,从情况五中来。表示之前grandParentNode已经是Root节点，此时不需要改变
         if (parentNode==RedBlackTreeNode.NIL)
             return null;
-        //情况二，当插入节点的父节点是黑节点的时候，直接将插入节点赋值为红并插入
+        //情况二，当插入节点的父节点是黑节点的时候，红黑树性质不变
         if (parentNode.isBlack){
-            insertNode.parent=parentNode;
-            if (insertNode.isLeft) parentNode.leftChild=insertNode;
-            else parentNode.rightChild=insertNode;
             return null;
         }
         //情况三，从情况五中来，表示之前grandParentNode的parentNode已经是Root节点,而之前grandParentNode已经是红节点
@@ -150,16 +157,13 @@ public class B_RedBlackTree {
         //情况四，爷、父、叔、子分别为 黑、红、黑、红。此时第一步需要将爷、父、子变成直线。然后旋转爷、父即可变成红、黑、黑、红
         if (grandParentNode.isBlack&&!parentNode.isBlack&&(uncleNode==RedBlackTreeNode.NIL||uncleNode.isBlack)){
             //如果不是直线，那么就旋转成直线
-            if (parentNode.isLeft!=insertNode.isLeft){
-                if (parentNode.isLeft) leftRotate(parentNode,insertNode);
-                else rightRotate(parentNode,insertNode);
-            }
+            if (parentNode.isLeft!=insertNode.isLeft)
+                rotate(parentNode,insertNode,parentNode.isLeft);
             //将爷、父的颜色交换一下
             grandParentNode.isBlack=false;
             parentNode.isBlack=true;
             //将爷、父旋转
-            if (!parentNode.isLeft) leftRotate(grandParentNode,parentNode);
-            else rightRotate(grandParentNode,parentNode);
+            rotate(grandParentNode,parentNode,!parentNode.isLeft);
             return parentNode.parent==RedBlackTreeNode.NIL?parentNode:null;
         }
         //情况五,在爷、父、叔、子为黑、红、红、红,的情况下只要改为红、黑、黑、红就行，
@@ -170,24 +174,17 @@ public class B_RedBlackTree {
             grandParentNode.isBlack=false;
 
             RedBlackTreeNode<T> tempGrandParent,tempParent,tempUncleNode;
+            tempGrandParent=grandParentNode.getGrandParent();
             tempParent=grandParentNode.parent;
-            if (tempParent==RedBlackTreeNode.NIL){
-                tempGrandParent=RedBlackTreeNode.NIL;
-                tempUncleNode=RedBlackTreeNode.NIL;
-            }else {
-                tempGrandParent=RedBlackTreeNode.NIL;
-                if (tempGrandParent==RedBlackTreeNode.NIL)
-                    tempUncleNode=RedBlackTreeNode.NIL;
-                else {
-                    if (tempParent.isLeft)
-                        tempUncleNode=tempGrandParent.leftChild;
-                    else
-                        tempUncleNode=tempGrandParent.rightChild;
-                }
-            }
-            return translate(tempGrandParent,tempParent,tempUncleNode,grandParentNode);
+            tempUncleNode=tempParent.getBrother();
+            return insertTranslate(tempGrandParent,tempParent,tempUncleNode,grandParentNode);
         }
         return null;
+    }
+
+    private static <T extends Comparable> RedBlackTreeNode rotate(RedBlackTreeNode<T> parentNode,RedBlackTreeNode<T> childNote,boolean isLeft){
+        if (isLeft)return leftRotate(parentNode,childNote);
+        else return rightRotate(parentNode,childNote);
     }
 
     private static <T extends Comparable> RedBlackTreeNode rightRotate(RedBlackTreeNode<T> parentNode,RedBlackTreeNode<T> rightNode){
