@@ -17,17 +17,17 @@ public class CountingSort {
     public static void countingSort(int[] A,int[] B,int k){
         /**
          * countingSort(int[] A,int[] B,int k)
-         * let C[0...k] to be a new array
+         * let C_LongestCommonSubList[0...k] to be a new array
          * for j=0 to k
-         *      C[j]=0
+         *      C_LongestCommonSubList[j]=0
          * for j=1 to A.length
-         *      C[A[j]]=C[A[j]]+1
+         *      C_LongestCommonSubList[A[j]]=C_LongestCommonSubList[A[j]]+1
          * for i=1 to k
-         *      C[i]=C[i]+C[i-1]
+         *      C_LongestCommonSubList[i]=C_LongestCommonSubList[i]+C_LongestCommonSubList[i-1]
          *
          * for i=A.length to 1
-         *      B[C[A[i]]]=A[i]
-         *      C[A[i]]=C[A[i]]-1
+         *      B[C_LongestCommonSubList[A[i]]]=A[i]
+         *      C_LongestCommonSubList[A[i]]=C_LongestCommonSubList[A[i]]-1
          */
 
         int[] C=new int[k];

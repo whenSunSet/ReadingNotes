@@ -8,7 +8,7 @@ public class GenericCast_four {
 
     public static void main(String[] args) {
         FixedSizeStack<String> stringFixedSizeStack=new FixedSizeStack<>(SIZE);
-        for (String s:"A_java基础 B C D E F G H I J".split(" "))
+        for (String s:"A_java基础 B C_LongestCommonSubList D E F G H I J".split(" "))
             stringFixedSizeStack.push(s);
         for (int i = 0; i < SIZE; i++) {
             String s=stringFixedSizeStack.pop();

@@ -6,7 +6,8 @@ import java.util.Random;
  * Created by heshixiyang on 2017/2/10.
  */
 public class Util {
-
+    public static char[] chars={'A','B','C','D','E','F','G','H','I','J','K',
+            'L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
     public static final int MAX=10000000;
     public static final int MIN=-10000000;
     public static int[] getRandomIntList(int size){
@@ -35,6 +36,16 @@ public class Util {
         return bytes;
     }
 
+    public static char[] getRandomCharListSeedRandom(int size,int bounder){
+        Random random=new Random(System.currentTimeMillis());
+        char[] chars=new char[size];
+        for (int i = 0; i < size; i++) {
+            chars[i]=Util.chars[random.nextInt(bounder)];
+        }
+        Util.printList(chars);
+        return chars;
+    }
+
     public static byte[] getRandomByteListHasBounderSeedRandom(int size, int bounder){
         Random random=new Random(System.currentTimeMillis());
         byte[] bytes=new byte[size];
@@ -48,6 +59,10 @@ public class Util {
 
     public static void printList(int[] ints){
         for (int i:ints) System.out.print(i+",");
+        System.out.println("");
+    }
+    public static void printList(char[] chars){
+        for (char i:chars) System.out.print(i+",");
         System.out.println("");
     }
     public static void printList(byte[] bytes){

@@ -29,7 +29,7 @@ public class EvenChecker implements Runnable {
     }
 
     public static void test(A_IntGenerator g,int count) {
-        System.out.println("Press Control-C to exit");
+        System.out.println("Press Control-C_LongestCommonSubList to exit");
         ExecutorService executorService= Executors.newCachedThreadPool();
         for (int i = 0; i < count; i++) {
             executorService.execute(new EvenChecker(i,g));
