@@ -1,4 +1,4 @@
-package com.example.IntroductionToAlgorithms.L_动态分析;
+package com.example.IntroductionToAlgorithms.L_动态规划;
 
 import com.example.IntroductionToAlgorithms.util.Util;
 
