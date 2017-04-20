@@ -50,22 +50,27 @@ public class B_FS {
         }
     }
 
+    static Queue<A_Map.Node> queue=new LinkedList<>();
+
     public static void DFS(A_Map.Map map){
-        Queue<A_Map.Node> queue=new LinkedList<>();
-        queue.add(map.getNode(0));
         Set<A_Map.Node> nodeSet=new HashSet<>();
-        while (queue.size()!=0){
-            A_Map.Node nowNode=queue.poll();
-            nodeSet.add(nowNode);
+        queue.add(map.getNode(0));
+        DFS_Visit(map,queue.poll(),queue,nodeSet);
+    }
 
-            System.out.println(nowNode.flag);
+    public static void DFS_Visit(A_Map.Map map,A_Map.Node nowNode,Queue<A_Map.Node> queue, Set<A_Map.Node> nodeSet){
+        System.out.println(nowNode.flag);
 
-            for (int i=nowNode.flag+1;i<map.line.length;i++){
-                if (map.line[nowNode.flag][i]!= Util.MAX&&!nodeSet.contains(map.getNode(i))){
-                    queue.add(map.getNode(i));
-                    nodeSet.add(map.getNode(i));
-                }
+        boolean isFind=false;
+        for (int i=nowNode.flag+1;i<map.line.length;i++){
+            if (map.line[nowNode.flag][i]!= Util.MAX&&!nodeSet.contains(map.getNode(i))){
+                queue.add(map.getNode(i));
+                nodeSet.add(map.getNode(i));
+                isFind=true;
+                break;
             }
         }
+        if (!isFind)DFS_Visit(map,queue.poll(),queue,nodeSet);
     }
+
 }

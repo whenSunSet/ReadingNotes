@@ -1,5 +1,7 @@
 package com.example.IntroductionToAlgorithms.N_图论;
 
+import com.example.IntroductionToAlgorithms.util.Util;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,8 +10,9 @@ import java.util.List;
  */
 public class A_Map {
     public static class Node{
+        public Node previousNode;
         public int flag;
-        public int dataNum;
+        public int dataNum= Util.MAX;
         public Object data;
 
         public Node(int flag) {
