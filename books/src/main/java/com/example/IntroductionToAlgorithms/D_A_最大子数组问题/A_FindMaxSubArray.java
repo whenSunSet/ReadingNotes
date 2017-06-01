@@ -74,7 +74,7 @@ public class A_FindMaxSubArray {
          *      if temp>=leftSum
          *          leftSum=temp
          *          l=j
-         * for j=middle to end
+         * for j=middle+1 to end
          *      temp=temp+A[j]
          *      if temp>=rightSum
          *          rightSum=temp
